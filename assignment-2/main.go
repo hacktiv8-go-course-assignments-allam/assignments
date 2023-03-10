@@ -1,8 +1,8 @@
 package main
 
 import (
-    "fmt"
-    "unicode/utf8"
+	"fmt"
+	"unicode/utf8"
 )
 
 func main() {
@@ -15,16 +15,16 @@ func main() {
     for j := 0; j < 11; j++ {
 				if j == 5 {
 					// array of characters
-					chars := []rune{'C', 'A', 'I', 'A', 'P', 'B', 'O'}
-					charMap := map[rune]rune{
-						'C': 0x3DE,
-						'A': 0x3CF,
-						'I': 0x3DF,
-						'P': 0x3D0,
-						'B': 0x3D0,
-						'O': 0x3CF,
+					// chars := []rune{'C', 'A', 'I', 'A', 'P', 'B', 'O'}
+					chars := []rune{
+						0x0421,
+						0x0410,
+						0x0428,
+						0x0410,
+						0x0420,
+						0x0412,
+						0x041E,
 					}
-
 
 					// map to store byte positions of characters
 					charPos := make(map[rune]int)
@@ -34,14 +34,7 @@ func main() {
 					for _, char := range chars {
 							charPos[char] = pos
 							pos += utf8.RuneLen(char)
-
-							// C => + 0x3DE
-							// A => + 0x3CF
-							// I => + 0x3DF
-							// P => + 0x3D0
-							// B => + 0x3D0
-							// O => + 0x3CF
-							fmt.Printf("character U+%04X '%c' starts at byte position %d\n", char + charMap[char], char, charPos[char] * 2)
+							fmt.Printf("character U+%04X '%c' starts at byte position %d\n", char, char, charPos[char])
 					}
 				} else {
         	fmt.Printf("nilai j  = %d\n", j)
