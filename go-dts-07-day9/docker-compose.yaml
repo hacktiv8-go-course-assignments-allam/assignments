@@ -1,0 +1,43 @@
+version: '3.9'
+services:
+  go-dts-user:
+    hostname: go-dts-user
+    restart: on-failure
+    build: 
+      context: app/go-dts-user
+      dockerfile: deployment/build/Dockerfile
+      no_cache: true
+    links:
+     - postgres
+    depends_on:
+      - postgres
+    ports:
+      - "9090:9090"
+    deploy:
+      mode: replicated
+      endpoint_mode: dnsrr
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+    networks:
+      - backend
+  postgres:
+    restart: on-failure
+    container_name: postgres-dts
+    build: 
+      context: postgres
+      dockerfile: Dockerfile
+    env_file:
+      - postgres/.env
+    ports:
+     - "25432:5432"
+    networks:
+      - backend
+networks:
+  backend:
+    driver: bridge
